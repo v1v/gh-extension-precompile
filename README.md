@@ -97,9 +97,11 @@ jobs:
 ```
 
 
-## Attest
+## Support for Artifact Attestations
 
-This action can optionally generate signed build provenance attestations for all published executables.
+This action can optionally generate signed build provenance attestations for all published executables within `${{ github.workspace }}/dist/*`.
+
+For more information, see ["Using artifact attestations to establish provenance for builds"](https://docs.github.com/en/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds).
 
 ```yaml
 name: release
@@ -121,7 +123,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: cli/gh-extension-precompile@v1
         with:
-          attest: true
+          generate_attestations: true
 ```
 
 
