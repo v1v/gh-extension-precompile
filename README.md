@@ -96,6 +96,35 @@ jobs:
           gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
 ```
 
+
+## Attest
+
+This action can optionally generate signed build provenance attestations for all published executables.
+
+```yaml
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cli/gh-extension-precompile@v1
+        with:
+          attest: true
+```
+
+
 ## Authors
 
 - nate smith <https://github.com/vilmibm>
