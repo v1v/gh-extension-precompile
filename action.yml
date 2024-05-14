@@ -17,6 +17,9 @@ inputs:
     description: "Tag that the release should be created from, defaults to `github.ref` if unspecified"
   release_title_prefix:
     description: "Title prefix of the release, defaults to repository name if unspecified"
+  generate_attestations:
+    description: "Whether to generate artifact attestations for release binaries to establish build provenance, defaults to `false` if unspecified"
+    default: false
 branding:
   color: purple
   icon: box
@@ -84,3 +87,8 @@ runs:
         GH_RELEASE_TITLE_PREFIX: ${{ steps.determine_release_title_prefix.outputs.PREFIX }}
         DRAFT_RELEASE: ${{ inputs.draft_release }}
       shell: bash
+
+    - if: ${{ inputs.generate_attestations == 'true' }}
+      uses: actions/attest-build-provenance@v1
+      with:
+        subject-path: '${{ github.workspace }}/dist/*'
